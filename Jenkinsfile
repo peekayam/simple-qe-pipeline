@@ -21,11 +21,10 @@ pipeline {
         
     stage('Build') {
       steps {
-        sh 'cd pwa-app'
         sh 'npm install --save-dev @angular-devkit/build-angular'
         sh 'npm install --save-dev http-server'
-        sh 'npm install @angular/cli'
-        sh 'ng build --prod'
+        sh 'npm install -g @angular/cli'
+        sh 'cd pwa-app && ng build --prod'
       }
     }
      
