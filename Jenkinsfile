@@ -41,7 +41,8 @@ pipeline {
     stage('Building Image'){
       steps{
         script{
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          //dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          sh 'docker build -t mazuma5/pipeline-project:$BUILD_NUMBER -f pwa/Dockerfile .'
         }
       }
     }
