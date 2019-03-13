@@ -11,12 +11,12 @@ pipeline {
   }
     
  stages {
-  stage('Cloning Git') {
+ /* stage('Cloning Git') {
       steps {
         sh 'cd ..'
         git 'git@github.com:mazuma5/JavaSeleniumBDD.git'
       }
-    }
+    }*/
     
         
     stage('Build') {
