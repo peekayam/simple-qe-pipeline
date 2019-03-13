@@ -21,9 +21,9 @@ pipeline {
         
     stage('Build') {
       steps {
-        sh 'npm install --save-dev @angular-devkit/build-angular'
+     /*   sh 'npm install --save-dev @angular-devkit/build-angular'
         sh 'npm install --save-dev http-server'
-        sh 'npm install -g @angular/cli'
+        sh 'npm install -g @angular/cli'*/
         sh 'cd pwa-app && ng build --prod'
       }
     }
@@ -42,7 +42,7 @@ pipeline {
       steps{
         script{
           //dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          sh 'docker build -t mazuma5/pipeline-project:$BUILD_NUMBER -f pwa/Dockerfile .'
+          sh 'docker build -t mazuma5/pipeline-project:$BUILD_NUMBER -f pwa-app/Dockerfile .'
         }
       }
     }
