@@ -11,9 +11,9 @@ RUN  npm install http-server -g
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json /app/
+COPY pwa-app/package.json /app/
 RUN npm install --only=production
 
 COPY pwa-app/dist /app/dist
 #EXPOSE 4200
-CMD  http-server -p 8080 -c-1 dist/pwa-app
+CMD  http-server -p 8080 -c-1 pwa-app/dist/pwa-app
