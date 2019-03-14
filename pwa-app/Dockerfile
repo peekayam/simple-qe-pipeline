@@ -14,6 +14,6 @@ WORKDIR /app
 COPY package.json /app/
 RUN npm install --only=production
 
-COPY dist /app/dist
+COPY pwa-app/dist /app/dist
 #EXPOSE 4200
 CMD  http-server -p 8080 -c-1 dist/pwa-app
