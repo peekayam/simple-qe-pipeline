@@ -51,7 +51,9 @@ pipeline {
       steps{
         script{
           docker.withRegistry('',registryCredential) {
-            dockerImage.push()
+            //dockerImage.push()
+            sh 'docker tag mazuma5/pipeline-project:$BUILD_NUMBER mazuma5/pipeline-project:$BUILD_NUMBER'
+            sh 'docker push mazuma5/pipeline-project:$BUILD_NUMBER'
           }
         }
       }
