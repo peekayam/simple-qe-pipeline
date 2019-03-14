@@ -8,18 +8,12 @@ pipeline {
   agent any
   tools {
     nodejs "node"
+    maven "Maven"
+    jdk "JDK"
   }
     
  stages {
- /* stage('Cloning Git') {
-      steps {
-        sh 'cd ..'
-        git 'git@github.com:mazuma5/JavaSeleniumBDD.git'
-      }
-    }*/
-    
-        
-    stage('Build') {
+    stage('Build App') {
       steps {
      /*   sh 'npm install --save-dev @angular-devkit/build-angular'
         sh 'npm install --save-dev http-server'
@@ -59,7 +53,7 @@ pipeline {
       }
     }
     
-    stage('Cleanup'){
+    stage('Cleanup Container'){
       when{
         not {environment ignoreCase:true, name:'containerId', value:''}
       }
@@ -72,6 +66,31 @@ pipeline {
       steps{
         sh 'docker run --name=pwa-node-app -d -p 3000:8080 mazuma5/pipeline-project:$BUILD_NUMBER &'
       }
-    }    
+    } 
+    stage('Cleanup'){
+      steps{
+        sh "cd JavaSeleniumBDD && mvn clean"
+      }
+    }
+    stage('Functional Test') {
+        steps {
+          sh "cd JavaSeleniumBDD && chmod +x src/main/resources/drivers/chromedriverlinux"
+          sh "cd JavaSeleniumBDD && rm -rf allure-results/ |:"
+          sh "cd JavaSeleniumBDD && mvn test -Dmaven.test.failure.ignore=true"
+        }
+      }  
+    stage('Run Allure') {
+      steps {
+        sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
+      }
+    } 
+    stage('Run JMeter') {
+      steps {
+        sh "cd JavaSeleniumBDD && /app/apache-jmeter-5.1/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t HTTPRequest.jmx -l HTTPRequest.jtl"
+        sh "cd JavaSeleniumBDD && /app/apache-jmeter-5.1/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t SampleHTTPRequest2.jmx -l HTTPRequestLink.jtl"
+        step([$class: 'ArtifactArchiver', artifacts: 'HTTPRequest.jtl'])
+        step([$class: 'ArtifactArchiver', artifacts: 'HTTPRequestLink.jtl'])
+      }
+    }
   }
 }
