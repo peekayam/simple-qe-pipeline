@@ -84,7 +84,7 @@ pipeline {
         sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     } 
-    stage('Run JMeter') {
+    stage('Performance Test') {
       steps {
         sh "cd JavaSeleniumBDD && rm -rf *.jtl|:"
         sh "cd JavaSeleniumBDD && /app/apache-jmeter-5.1/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t HTTPRequest.jmx -l HTTPRequest.jtl"
