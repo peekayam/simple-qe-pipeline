@@ -29,7 +29,7 @@ pipeline {
     }*/
    stage('Sonar scan'){
       steps{
-        sh '/app/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
+        sh 'cd pwa-app && /app/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
       }
     }
     stage('Building Image'){
