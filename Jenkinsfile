@@ -15,9 +15,6 @@ pipeline {
  stages {
     stage('Build App') {
       steps {
-        sh 'npm install --save-dev @angular-devkit/build-angular'
-        sh 'npm install --save-dev http-server'
-        sh 'npm install -g @angular/cli'
         sh 'cd pwa-app && ng build --prod'
       }
     }
@@ -27,11 +24,11 @@ pipeline {
          sh 'cd pwa-app && npm test'
       }
     }*/
-   stage('Sonar scan'){
+   /*stage('Sonar scan'){
       steps{
         sh 'cd pwa-app && /app/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
       }
-    }
+    }*/
     stage('Building Image'){
       steps{
         script{
@@ -84,7 +81,7 @@ pipeline {
         sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     } 
-    stage('Performance Test') {
+   /* stage('Performance Test') {
       steps {
         sh "cd JavaSeleniumBDD && rm -rf *.jtl|:"
         sh "cd JavaSeleniumBDD && /app/apache-jmeter-5.1/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t HTTPRequest.jmx -l HTTPRequest.jtl"
@@ -92,6 +89,6 @@ pipeline {
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequest.jtl'])
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequestLink.jtl'])
       }
-    }
+    }*/
   }
 }
