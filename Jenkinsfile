@@ -1,6 +1,6 @@
 pipeline {
   environment{
-    registry = "mazuma5/pipeline-project"
+    registry = "peekayam/pipeline-project"
     registryCredential = 'Dockerhub'
     dockerImage = ''
     containerId = sh(script: 'docker ps -aqf "name=pwa-node-app"', returnStdout:true)
