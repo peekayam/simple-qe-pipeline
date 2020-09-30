@@ -15,7 +15,7 @@ public class ConnectionSteps {
         Framework.init();
     }
 
-  @When("user navigates to http:\\/\\/340.117.115.204:3000\\/")
+  @When("user navigates to http:\\/\\/40.117.115.204:3000\\/")
     public void user_navigates_to_google_com() {
         Framework.getWebDriver().navigate().to("http:\\/\\/40.117.115.204:3000\\/");
     }
