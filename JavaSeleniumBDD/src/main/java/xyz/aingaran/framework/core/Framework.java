@@ -28,7 +28,7 @@ public class Framework {
     }
 
     public static void init()  {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriverlinux");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriverlinux85");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.setHeadless(true);
