@@ -50,9 +50,9 @@ pipeline {
           }
         }
       }
-    }
+    }*/
     
-    stage('Cleanup Container'){
+    stage('Cleanup running Container'){
       when{
         not {environment ignoreCase:true, name:'containerId', value:''}
       }
@@ -60,7 +60,7 @@ pipeline {
         sh 'docker stop ${containerId}'
         sh 'docker rm ${containerId}'
       }
-    }*/
+    }
     stage('Run Container'){
       steps{
         sh 'docker run --name=pwa-node-app -d -p 3000:3000 mazuma5/pipeline-project:$BUILD_NUMBER &'
