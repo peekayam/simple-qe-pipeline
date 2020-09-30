@@ -63,7 +63,7 @@ pipeline {
     }
     stage('Run Container'){
       steps{
-        sh 'docker run --name=pwa-node-app -d -p 8080:3000 mazuma5/pipeline-project:$BUILD_NUMBER &'
+        sh 'docker run --name=pwa-node-app -d -p 3000:3000 mazuma5/pipeline-project:$BUILD_NUMBER &'
       }
     } 
     stage('Cleanup'){
