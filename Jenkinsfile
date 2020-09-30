@@ -21,7 +21,7 @@ pipeline {
       }
     }
      
-  /*   stage('Test') {
+  /*  stage('Test') {
       steps {
          sh 'cd pwa-app && npm test'
       }
