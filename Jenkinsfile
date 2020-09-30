@@ -73,7 +73,7 @@ pipeline {
     }
     stage('Functional Test') {
         steps {
-          sh "cd JavaSeleniumBDD && chmod +x src/main/resources/drivers/chromedriverlinux"
+          sh "cd JavaSeleniumBDD && chmod +rwx src/main/resources/drivers/chromedriverlinux"
           sh "cd JavaSeleniumBDD && rm -rf allure-results/ |:"
           sh "cd JavaSeleniumBDD && mvn test -Dmaven.test.failure.ignore=true"
         }
