@@ -40,7 +40,7 @@ pipeline {
       }
     }
     
-    stage('Push Image'){
+    /*stage('Push Image'){
       steps{
         script{
           docker.withRegistry('',registryCredential) {
@@ -60,7 +60,7 @@ pipeline {
         sh 'docker stop ${containerId}'
         sh 'docker rm ${containerId}'
       }
-    }
+    }*/
     stage('Run Container'){
       steps{
         sh 'docker run --name=pwa-node-app -d -p 3000:8080 mazuma5/pipeline-project:$BUILD_NUMBER &'
