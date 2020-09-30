@@ -25,7 +25,7 @@ pipeline {
       steps {
          sh 'cd pwa-app && npm test'
       }
-    }*
+    }
    /*stage('Sonar scan'){
       steps{
         sh 'cd pwa-app && /app/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
