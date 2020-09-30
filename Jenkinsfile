@@ -80,6 +80,7 @@ pipeline {
       }  
     stage('Run Allure') {
       steps {
+        sh "JAVA_HOME=/usr/local/openjdk-8/"
         sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     } 
