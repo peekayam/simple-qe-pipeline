@@ -17,7 +17,7 @@ pipeline {
       steps {
         sh 'cd pwa-app && ./init_script.sh'
         //sh 'cd pwa-app && npm install'
-        sh 'cd pwa-app && ng build --prod'
+        sh 'cd pwa-app && npm run build'
       }
     }
      
