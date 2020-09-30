@@ -21,11 +21,11 @@ pipeline {
       }
     }
      
-  /*  stage('Test') {
+   stage('Unit Test') {
       steps {
          sh 'cd pwa-app && npm test'
       }
-    }*/
+    }*
    /*stage('Sonar scan'){
       steps{
         sh 'cd pwa-app && /app/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
@@ -80,7 +80,6 @@ pipeline {
       }  
     stage('Run Allure') {
       steps {
-        sh "JAVA_HOME=/usr/local/openjdk-8/"
         sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     } 
