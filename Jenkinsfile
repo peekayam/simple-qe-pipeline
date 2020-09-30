@@ -15,7 +15,7 @@ pipeline {
  stages {
     stage('Build App') {
       steps {
-        sh 'cd pwa-app && ./init_script.sh'
+        sh 'cd pwa-app && pwd'
         //sh 'cd pwa-app && npm install'
         sh 'cd pwa-app && npm run build'
       }
