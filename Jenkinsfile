@@ -84,8 +84,8 @@ pipeline {
     }
     stage('Run Allure') {
       steps {
-        sh "kill -9 `ps -ef | grep allure | grep -v grep | awk '{print $2}'`"
-        sh "cd JavaSeleniumBDD && JENKINS_NODE_COOKIE=dontkillme /opt/allure/bin/allure serve allure-results --port 3030 &"
+        sh "kill -9 `ps -ef | grep allure | grep -v grep |tr -s ' '|cut -d ' ' -f2`"
+        sh "cd JavaSeleniumBDD && JENKINS_NODE_COOKIE=dontkillme nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     }
     stage('Performance Test') {
