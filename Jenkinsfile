@@ -80,7 +80,7 @@ pipeline {
       }  
     stage('Run Allure') {
       steps {
-        sh "cd JavaSeleniumBDD && nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
+        sh "cd JavaSeleniumBDD && JENKINS_NODE_COOKIE=dontkillme nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     } 
    /* stage('Performance Test') {
