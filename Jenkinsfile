@@ -94,6 +94,8 @@ pipeline {
         sh "cd JavaSeleniumBDD && /opt/jmeter/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t SampleHTTPRequest2.jmx -l HTTPRequestLink.jtl"
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequest.jtl'])
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequestLink.jtl'])
+        perfReport 'JavaSeleniumBDD/HTTPRequest.jtl'
+        perfReport 'JavaSeleniumBDD/HTTPRequestLink.jtl'
       }
     }
   }
