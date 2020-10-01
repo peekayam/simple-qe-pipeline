@@ -4,6 +4,7 @@ pipeline {
     registryCredential = 'Dockerhub'
     dockerImage = ''
     containerId = sh(script: 'docker ps -aqf "name=pwa-node-app"', returnStdout: true)
+    allureId = sh(script: 'ps -ef | grep allure | grep -v grep |tr -s " "|cut -d " " -f2', returnStdout: true)
   }
   agent any
   tools {
@@ -15,6 +16,7 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
+        sh "kill -9 13231"
         sh 'cd pwa-app && chmod +x init_module.sh && ./init_module.sh'
         //sh 'cd pwa-app && npm install'
         sh 'cd pwa-app && npm run build'
@@ -75,6 +77,18 @@ pipeline {
         sh "cd JavaSeleniumBDD && mvn clean"
       }
     }
+    stage('Stop Allure server') {
+      when {
+        not {
+          environment ignoreCase: true,
+          name: 'allureId',
+          value: ''
+        }
+      }
+      steps {
+        sh 'kill -9 ${allureId}'
+      }
+    }
     stage('Functional Test') {
       steps {
         sh "cd JavaSeleniumBDD && chmod +x src/main/resources/drivers/chromedriverlinux85"
@@ -82,10 +96,9 @@ pipeline {
         sh "cd JavaSeleniumBDD && mvn test -Dmaven.test.failure.ignore=true"
       }
     }
-    stage('Run Allure') {
+    stage('Run Allure server') {
       steps {
-        sh "kill -9 `ps -ef | grep allure | grep -v grep |tr -s ' '|cut -d ' ' -f2`"
-        sh "cd JavaSeleniumBDD && JENKINS_NODE_COOKIE=dontkillme nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
+        sh "cd JavaSeleniumBDD  && JENKINS_NODE_COOKIE=dontkillme nohup /opt/allure/bin/allure serve allure-results --port 3030 &"
       }
     }
     stage('Performance Test') {
