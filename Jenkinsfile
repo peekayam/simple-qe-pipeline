@@ -12,13 +12,10 @@ pipeline {
     maven "Maven"
     jdk "JDK"
   }
-
   stages {
     stage('Build App') {
       steps {
-        sh "kill -9 13231"
         sh 'cd pwa-app && chmod +x init_module.sh && ./init_module.sh'
-        //sh 'cd pwa-app && npm install'
         sh 'cd pwa-app && npm run build'
       }
     }
@@ -41,7 +38,6 @@ pipeline {
         }
       }
     }
-
     /*stage('Push Image'){
       steps{
         script{
@@ -53,7 +49,6 @@ pipeline {
         }
       }
     }*/
-
     stage('Cleanup running Container') {
       when {
         not {
