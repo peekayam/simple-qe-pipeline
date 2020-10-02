@@ -48,7 +48,7 @@ pipeline {
           }
         }
       }
-    }*/
+    } */
     stage('Cleanup running Container') {
       when {
         not {
