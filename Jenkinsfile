@@ -1,7 +1,8 @@
 pipeline {
   environment {
-    registry = "peekayam/pipeline-project"
-    registryCredential = 'Dockerhub'
+    registry = '168.62.187.166:8083/pwa-node-app:$BUILD_NUMBER'
+    registryUrl = 'http://168.62.187.166:8083/'
+    registryCredential = 'nexus'
     dockerImage = ''
     containerId = sh(script: 'docker ps -aqf "name=pwa-node-app"', returnStdout: true)
     allureId = sh(script: 'ps -ef | grep allure | grep -v grep |tr -s " "|cut -d " " -f2', returnStdout: true)
@@ -19,36 +20,23 @@ pipeline {
         sh 'cd pwa-app && npm run build'
       }
     }
-
-    /* stage('Unit Test') {
+    stage('Unit Test') {
       steps {
          sh 'cd pwa-app && npm test'
       }
-    }*/
-    stage('Sonar scan'){
-      steps{
+    }
+    stage('Sonar scan') {
+      steps {
         sh 'cd pwa-app && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
       }
     }
-    stage('Building Image') {
+    stage('Build Docker Image') {
       steps {
         script {
-          //dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          sh 'docker build -t mazuma5/pipeline-project:$BUILD_NUMBER -f pwa-app/Dockerfile .'
+          dockerImage = docker.build(registry, "-f pwa-app/Dockerfile .")
         }
       }
     }
-    /*stage('Push Image'){
-      steps{
-        script{
-          docker.withRegistry('',registryCredential) {
-            //dockerImage.push()
-            sh 'docker tag mazuma5/pipeline-project:$BUILD_NUMBER mazuma5/pipeline-project:$BUILD_NUMBER'
-            sh 'docker push mazuma5/pipeline-project:$BUILD_NUMBER'
-          }
-        }
-      }
-    } */
     stage('Cleanup running Container') {
       when {
         not {
@@ -64,7 +52,7 @@ pipeline {
     }
     stage('Run Container') {
       steps {
-        sh 'docker run --name=pwa-node-app -d -p 3000:3000 mazuma5/pipeline-project:$BUILD_NUMBER &'
+        sh 'docker run --name=pwa-node-app -d -p 3000:3000 ' + registry
       }
     }
     stage('Cleanup') {
@@ -105,6 +93,15 @@ pipeline {
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequestLink.jtl'])
         perfReport 'JavaSeleniumBDD/HTTPRequest.jtl'
         perfReport 'JavaSeleniumBDD/HTTPRequestLink.jtl'
+      }
+    }
+    stage('Push Docker Image') {
+      steps {
+        script {
+          docker.withRegistry(registryUrl, registryCredential) {
+            dockerImage.push()
+          }
+        }
       }
     }
   }
