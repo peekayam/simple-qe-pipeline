@@ -16,18 +16,18 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
-        sh 'cd pwa-app && chmod +x init_module.sh && ./init_module.sh'
-        sh 'cd pwa-app && npm run build'
+        sh 'cd tour-of-heroes && chmod +x init_module.sh && ./init_module.sh'
+        sh 'cd tour-of-heroes && npm run build'
       }
     }
     stage('Unit Test') {
       steps {
-         sh 'cd pwa-app && npm test'
+         sh 'cd tour-of-heroes && npm test'
       }
     }
     stage('Sonar scan') {
       steps {
-        sh 'cd pwa-app && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
+        sh 'cd tour-of-heroes && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
       }
     }
     stage('Build Docker Image') {
