@@ -1,10 +1,10 @@
 pipeline {
   environment {
-    registry = '168.62.187.166:8083/pwa-node-app:$BUILD_NUMBER'
+    registry = '168.62.187.166:8083/tour-of-heroes:$BUILD_NUMBER'
     registryUrl = 'http://168.62.187.166:8083/'
     registryCredential = 'nexus'
     dockerImage = ''
-    containerId = sh(script: 'docker ps -aqf "name=pwa-node-app"', returnStdout: true)
+    containerId = sh(script: 'docker ps -aqf "name=tour-of-heroes"', returnStdout: true)
     allureId = sh(script: 'ps -ef | grep allure | grep -v grep |tr -s " "|cut -d " " -f2', returnStdout: true)
   }
   agent any
@@ -22,18 +22,18 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
-         sh 'cd tour-of-heroes && npm test'
+         sh 'cd tour-of-heroes && npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI'
       }
     }
     stage('Sonar scan') {
       steps {
-        sh 'cd tour-of-heroes && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
+        sh 'cd tour-of-heroes && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=tour-of-heroes -Dsonar.sources=.'
       }
     }
     stage('Build Docker Image') {
       steps {
         script {
-          dockerImage = docker.build(registry, "-f pwa-app/Dockerfile .")
+          dockerImage = docker.build(registry, "-f tour-of-heroes/Dockerfile .")
         }
       }
     }
@@ -52,7 +52,7 @@ pipeline {
     }
     stage('Run Container') {
       steps {
-        sh 'docker run --name=pwa-node-app -d -p 3000:3000 ' + registry
+        sh 'docker run --name=tour-of-heroes -d -p 3000:3000 ' + registry
       }
     }
     stage('Cleanup') {
