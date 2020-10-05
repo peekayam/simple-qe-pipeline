@@ -20,12 +20,11 @@ pipeline {
         sh 'cd pwa-app && npm run build'
       }
     }
-
-    /* stage('Unit Test') {
+    stage('Unit Test') {
       steps {
          sh 'cd pwa-app && npm test'
       }
-    }*/
+    }
     stage('Sonar scan') {
       steps {
         sh 'cd pwa-app && /opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pwa -Dsonar.sources=.'
@@ -103,11 +102,6 @@ pipeline {
             dockerImage.push()
           }
         }
-      }
-    }
-    stage('Remove Local Docker Image') {
-      steps {
-        sh 'docker rmi ' + registry
       }
     }
   }
