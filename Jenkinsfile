@@ -22,7 +22,7 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
-         sh 'cd tour-of-heroes && npm test --no-watch --no-progress --browsers=ChromeHeadlessCI'
+         sh 'cd tour-of-heroes && npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI'
       }
     }
     stage('Sonar scan') {
