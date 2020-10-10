@@ -19,4 +19,4 @@ Scenario: open http://52.150.14.46:3000/ to get 'The Homelander' value in Textbo
     Then user clicks 'The Homelander' in hero list and sees the value in Textbox
     Then user clicks on 'The Homelander'
     Then user sees 'The Homelander' value in Textbox
-    Then user takes a screenshot of 'The Homelander' in hero list
+    Then user takes a screenshot of Textbox
