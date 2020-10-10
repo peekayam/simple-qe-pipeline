@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    registry = '168.62.187.166:8083/tour-of-heroes:$BUILD_NUMBER'
-    registryUrl = 'http://168.62.187.166:8083/'
+    registry = '52.152.231.79:8083/tour-of-heroes:$BUILD_NUMBER'
+    registryUrl = 'http://52.152.231.79:8083/'
     registryCredential = 'nexus'
     dockerImage = ''
     containerId = sh(script: 'docker ps -aqf "name=tour-of-heroes"', returnStdout: true)
