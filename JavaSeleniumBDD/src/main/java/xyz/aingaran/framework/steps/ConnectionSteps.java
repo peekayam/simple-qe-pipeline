@@ -8,7 +8,6 @@ import xyz.aingaran.framework.core.Framework;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebElement;
 
 public class ConnectionSteps {
@@ -60,23 +59,13 @@ public class ConnectionSteps {
     public void user_loads_browser_to_check_link3() {
         Framework.init();
     }
-
-    @Then("user clicks on 'The Homelander'")
-    public void user_sees_element_link3() {
-        try{
-            WebDriver driver = Framework.getWebDriver();
-            Actions ac = new Actions(driver);
-            WebElement el = driver.findElement(By.xpath("//*[contains(text(),'The Homelander')]"));
-            ac.moveToElement(el).click();
-            Thread.sleep(1000);
-        }catch(Exception e){
-            Assert.assertTrue(false);
-        }
-    }
-    @Then("user sees 'The Homelander' value in Textbox")
+    
+    @Then("user clicks 'The Homelander' in hero list and sees the value in Textbox")
     public void user_sees_element_textbox() {
         try{
             WebDriver driver = Framework.getWebDriver();
+            driver.findElement(By.xpath("//*[contains(text(),'The Homelander')]")).click();
+            Thread.sleep(1000);
             WebElement tBox = driver.findElement(By.xpath("//input"));
             String tBoxVal = tBox.getAttribute("value");
             Assert.assertEquals(tBoxVal,"The Homelander");
@@ -84,7 +73,7 @@ public class ConnectionSteps {
             Assert.assertTrue(false);
         }
     }
-    @Then("user takes a screenshot of link2")
+    @Then("user takes a screenshot of Textbox")
     public void user_takes_a_screenshot_3() {
         Framework.takeScreenShot("pwa", "page3");
     }
