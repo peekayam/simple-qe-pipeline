@@ -10,19 +10,19 @@ import org.testng.annotations.Test;
 
 public class ConnectionSteps {
 
-    @Given("loads browser to check image")
-    public void user_loads_browser_to_check_image() {
+    @Given("user loads browser")
+    public void user_loads_browser() {
         Framework.init();
     }
 
-  @When("user navigates to http:\\/\\/13.90.131.250:3000\\/")
+    @When("user navigates to http:\\/\\/52.150.14.46:3000\\/")
     public void user_navigates_to_google_com() {
-        Framework.getWebDriver().navigate().to("http:\\/\\/13.90.131.250:3000\\/");
+        Framework.getWebDriver().navigate().to("http:\\/\\/52.150.14.46:3000\\/");
     }
 
-    @Then("user sees element image1")
+    @Then("user sees element h1")
     public void user_sees_element_hplogo() {
-        Framework.getWebDriver().findElement(By.id("image1"));
+        Framework.getWebDriver().findElement(By.xpath("/html/body/app-root/h1"));
     }
     
     @Then("user takes a screenshot")
@@ -35,12 +35,12 @@ public class ConnectionSteps {
         Framework.init();
     }
 
-    @Then("user sees element link1")
+    @Then("user sees 'The Homelander' in hero list")
     public void user_sees_element_link1() {
-        Framework.getWebDriver().findElement(By.id("link1"));
+        Framework.getWebDriver().findElement(By.xpath("//*[text()='The Homelander']"));
     } 
     
-    @Then("user takes a screenshot of link1")
+    @Then("user takes a screenshot of 'The Homelander' in hero list")
     public void user_takes_a_screenshot_1() {
         Framework.takeScreenShot("pwa", "page2");
     } 
