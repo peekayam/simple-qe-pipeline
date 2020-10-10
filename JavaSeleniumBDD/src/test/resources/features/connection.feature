@@ -7,7 +7,7 @@ Scenario: open http://52.150.14.46:3000/ to check h1
     Then user sees element h1
     Then user takes a screenshot
 
-Scenario: open http://52.150.14.46:3000/ to check link1
+Scenario: open http://52.150.14.46:3000/ to check 'The Homelander' in hero list
     Given user loads browser
     When user navigates to http://52.150.14.46:3000/ 
     Then user sees 'The Homelander' in hero list
