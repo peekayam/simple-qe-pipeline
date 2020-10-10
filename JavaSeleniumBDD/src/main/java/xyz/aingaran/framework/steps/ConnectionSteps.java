@@ -37,7 +37,7 @@ public class ConnectionSteps {
 
     @Then("user sees 'The Homelander' in hero list")
     public void user_sees_element_link1() {
-        Framework.getWebDriver().findElement(By.xpath("//*[text()='The Homelander']"));
+        Framework.getWebDriver().findElement(By.xpath("//*[contains(text(),'The Homelander')]"));
     } 
     
     @Then("user takes a screenshot of 'The Homelander' in hero list")
