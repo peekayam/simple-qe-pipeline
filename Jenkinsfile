@@ -55,6 +55,15 @@ pipeline {
         sh 'docker run --name=tour-of-heroes -d -p 3000:3000 ' + registry
       }
     }
+    stage('Push Docker Image') {
+      steps {
+        script {
+          docker.withRegistry(registryUrl, registryCredential) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
     stage('Cleanup') {
       steps {
         sh "cd JavaSeleniumBDD && mvn clean"
@@ -93,15 +102,6 @@ pipeline {
         step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/HTTPRequestLink.jtl'])
         perfReport 'JavaSeleniumBDD/HTTPRequest.jtl'
         perfReport 'JavaSeleniumBDD/HTTPRequestLink.jtl'
-      }
-    }
-    stage('Push Docker Image') {
-      steps {
-        script {
-          docker.withRegistry(registryUrl, registryCredential) {
-            dockerImage.push()
-          }
-        }
       }
     }
   }
