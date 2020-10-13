@@ -1,11 +1,12 @@
 pipeline {
   environment {
-    registry = '52.152.231.79:8083/tour-of-heroes:$BUILD_NUMBER'
-    registryUrl = 'http://52.152.231.79:8083/'
+    registry = '52.168.14.119:8083/tour-of-heroes:$BUILD_NUMBER'
+    registryUrl = 'http://52.168.14.119:8083/'
     registryCredential = 'nexus'
     dockerImage = ''
     containerId = sh(script: 'docker ps -aqf "name=tour-of-heroes"', returnStdout: true)
     allureId = sh(script: 'ps -ef | grep allure | grep -v grep |tr -s " "|cut -d " " -f2', returnStdout: true)
+	allureScreenShots = sh(script: 'date +"%Y-%m-%d"|tr -d "\n"', returnStdout: true)
   }
   agent any
   tools {
@@ -86,6 +87,7 @@ pipeline {
         sh "cd JavaSeleniumBDD && chmod +x src/main/resources/drivers/chromedriverlinux85"
         sh "cd JavaSeleniumBDD && rm -rf allure-results/ |:"
         sh "cd JavaSeleniumBDD && mvn test -Dmaven.test.failure.ignore=true"
+		step([$class: 'ArtifactArchiver', artifacts: 'JavaSeleniumBDD/src/test/resources/screenshot/'+allureScreenShots+'/pwa/*'])
       }
     }
     stage('Run Allure server') {
